@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
 import { ListOfContact, ContactItem } from './ContactList.styled';
+import { useSelector } from 'react-redux';
 
-export const ContactsList = ({ contacts, deleteContact }) => {
+export const ContactsList = () => {
+  const contacts = useSelector(state => state.contacts); // отримання переліку контактів із state
+
   return (
     <ListOfContact>
       {contacts.map(contact => (
         <ContactItem key={contact.id}>
           {contact.name}: {contact.number}
-          <button type="button" onClick={() => deleteContact(contact.id)}>
+          {/* <button type="button" onClick={() => deleteContact(contact.id)}>
             Delete
-          </button>
+          </button> */}
         </ContactItem>
       ))}
     </ListOfContact>

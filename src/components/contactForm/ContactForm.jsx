@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid';
 
@@ -13,7 +12,7 @@ import {
   InputField,
 } from './ContactForm.styled';
 
-export const ContactForm = ({ formSubmit }) => {
+export const ContactForm = () => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -37,13 +36,11 @@ export const ContactForm = ({ formSubmit }) => {
     }
   };
 
-  // функція відправки даних
+  // функція відправки даних до state
   const handleSubmit = event => {
     event.preventDefault();
     const id = nanoid(3);
-    console.log({ id, name, number });
     dispatch(add({ id, name, number }));
-    formSubmit({ id, name, number });
     reset();
   };
 
@@ -61,7 +58,7 @@ export const ContactForm = ({ formSubmit }) => {
           type="text"
           name="name"
           value={name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           onChange={handleChange}
@@ -74,7 +71,7 @@ export const ContactForm = ({ formSubmit }) => {
           type="tel"
           name="number"
           value={number}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={handleChange}
@@ -83,8 +80,4 @@ export const ContactForm = ({ formSubmit }) => {
       <ButtonAdd type="submit">Add contact</ButtonAdd>
     </FormWrapper>
   );
-};
-
-ContactForm.propTypes = {
-  formSubmit: PropTypes.func.isRequired,
 };
