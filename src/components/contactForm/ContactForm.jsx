@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid';
 
+import { useDispatch } from 'react-redux';
+import { add } from 'redux/contacts/contactsSlice';
+
 import {
   FormWrapper,
   ButtonAdd,
@@ -11,6 +14,8 @@ import {
 } from './ContactForm.styled';
 
 export const ContactForm = ({ formSubmit }) => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -36,6 +41,8 @@ export const ContactForm = ({ formSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
     const id = nanoid(3);
+    console.log({ id, name, number });
+    dispatch(add({ id, name, number }));
     formSubmit({ id, name, number });
     reset();
   };

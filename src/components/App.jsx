@@ -3,10 +3,11 @@ import { ContactForm } from './contactForm/ContactForm';
 import { ContactsList } from './contactList/ContactList';
 import { Filter } from './filter/Filter';
 import { Container } from './App.styled';
+// import { useSelector } from 'react-redux';
 
 export const App = () => {
   const [contacts, setContacts] = useState(
-    JSON.parse(window.localStorage.getItem('contacts'))
+    JSON.parse(window.localStorage.getItem('contacts')) // зчитування зі сховища
   );
   const [filter, setFilter] = useState('');
 
