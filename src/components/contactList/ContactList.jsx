@@ -1,30 +1,33 @@
-import PropTypes from 'prop-types';
 import { ListOfContact, ContactItem } from './ContactList.styled';
 import { useSelector } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
+import { remove } from 'redux/contacts/contactsSlice';
+
 export const ContactsList = () => {
-  const contacts = useSelector(state => state.contacts); // отримання переліку контактів із state
+  const dispatch = useDispatch();
+
+  // отримання значення тексту із state.filter для пошуку збігу у іменах контактів
+  const contactSearch = useSelector(state => state.filter.value);
+
+  // отримання переліку контактів із state.contacts для відображення
+  const contacts = useSelector(state => state.contacts);
+
+  // створення нового списку контактів із тих контактів, імена яких включають текст із state.filter
+  const visibleContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(contactSearch.toLowerCase())
+  );
 
   return (
     <ListOfContact>
-      {contacts.map(contact => (
+      {visibleContacts.map(contact => (
         <ContactItem key={contact.id}>
           {contact.name}: {contact.number}
-          {/* <button type="button" onClick={() => deleteContact(contact.id)}>
+          <button type="button" onClick={() => dispatch(remove(contact.id))}>
             Delete
-          </button> */}
+          </button>
         </ContactItem>
       ))}
     </ListOfContact>
   );
-};
-
-ContactsList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
 };
