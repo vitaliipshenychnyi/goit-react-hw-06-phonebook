@@ -11,8 +11,7 @@ export const ContactsList = () => {
   const contactSearch = useSelector(state => state.filter.value);
 
   // отримання переліку контактів із state.contacts для відображення
-  const contacts = useSelector(state => state.contacts);
-  console.log('Перелік контактів у сховищі contacts =', contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
   // створення нового списку контактів із тих контактів, імена яких включають текст із state.filter
   const visibleContacts = contacts.filter(contact =>

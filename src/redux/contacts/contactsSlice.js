@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const contactsInitialState = [{id: "abc", name: "test-1", number: "+38022222222222"}, {id: "def", name: "test-2", number: "+381111111111111"}]; // Для тестування
+const contactsInitialState = {
+  items: [],
+};
 
 export const contactsSlice = createSlice({
   name: 'contacts',
@@ -8,20 +10,20 @@ export const contactsSlice = createSlice({
   reducers: {
     add(state, action) {
       const doubleContact =
-        state.findIndex(contact => contact.name === action.payload.name) === -1;
+        state.items.findIndex(contact => contact.name === action.payload.name) === -1;
 
       if (doubleContact) {
-        state.push(action.payload); // додавання нового контакту
+        state.items.push(action.payload); // додавання нового контакту
       } else {
         alert(`${action.payload.name} is already in contacts.`);
       }
     },
     remove(state, action) {
       // визначення індексу контакту у переліку контактів
-      const idxContact = state.findIndex(
+      const idxContact = state.items.findIndex(
         contact => contact.id === action.payload
       );
-      state.splice(idxContact, 1); // видалення контакту по id
+      state.items.splice(idxContact, 1); // видалення контакту по id
     },
   },
 });
